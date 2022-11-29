@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('nama');
             $table->integer('angkatan');
             $table->string('password');
-            $table->string('token');
+            $table->string('token')->nullable();
             $table->timestamps();
         });
     }
