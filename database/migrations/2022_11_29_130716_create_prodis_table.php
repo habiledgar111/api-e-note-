@@ -13,13 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('mahasiswas', function (Blueprint $table) {
-            $table->string('nim')->primary();
+        Schema::create('prodis', function (Blueprint $table) {
+            $table->id();
             $table->string('nama');
-            $table->integer('angkatan');
-            $table->integer('prodiId')->references('id')->on('prodis');
-            $table->string('password');
-            $table->string('token')->nullable();
             $table->timestamps();
         });
     }
@@ -31,6 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('mahasiswas');
+        Schema::dropIfExists('prodis');
     }
 };
