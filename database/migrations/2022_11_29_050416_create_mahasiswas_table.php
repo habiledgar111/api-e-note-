@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('nim')->primary();
             $table->string('nama');
             $table->integer('angkatan');
-            $table->integer('prodiId')->references('id')->on('prodis');
+            $table->foreignId('prodiId')->unsigned();
             $table->string('password');
             $table->string('token')->nullable();
             $table->timestamps();

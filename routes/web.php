@@ -23,5 +23,9 @@ $router->group(['prefix' => 'auth'], function () use ($router) {
 });
 
 $router->group(['prefix' => 'prodi'], function () use ($router) {
-    $router->post('/', ['uses'=> 'prodiController@prodi']);
+    $router->get('/', ['uses'=> 'prodiController@prodi']);
+});
+
+$router->group(['prefix' => 'mahasiswa'], function () use ($router) {
+    $router->get('/', ['uses'=> 'mahasiswaController@getallmhs']);
 });

@@ -25,9 +25,9 @@ class prodiController extends Controller
                 'message' => 'no data'
             ],500);
         }
-        
+
         return response()->json([
-           'prodi' => $prodi
+        'prodi' => $prodi
         ],200);
     }
     //

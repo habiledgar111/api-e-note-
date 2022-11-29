@@ -22,14 +22,14 @@ class authController extends Controller
         $nim = $request->nim;
         $nama = $request->nama;
         $angkatan = $request->angkatan;
-        $prodi = $request->prodId;
+        $prodi = $request->prodiId;
         $password = $request->password;
 
         $mahasiswa = mahasiswa::create([
             'nim' => $nim,
             'nama' => $nama,
             'angkatan' => $angkatan,
-            'prodId' => $prodi,
+            'prodiId' => $prodi,
             'password' => $password
         ]);
 
