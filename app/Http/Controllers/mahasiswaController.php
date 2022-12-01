@@ -23,7 +23,7 @@ class mahasiswaController extends Controller
     //kendala disini
     public function getallmhs(){
         // $mahasiswa = mahasiswa::all();
-        $mahasiswa = mahasiswa::with('prodi')->get();
+        $mahasiswa = mahasiswa::with('prodi','mhstomk')->get();
 
         return response()->json([
             "success" => true,
