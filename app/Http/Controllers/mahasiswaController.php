@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 use App\Models\mahasiswa;
 use App\Models\prodi;
 use Illuminate\Http\Request;
+use Firebase\JWT\JWT;
+use Firebase\JWT\Key;
+use Firebase\JWT\ExpiredException;
 
 class mahasiswaController extends Controller
 {
@@ -19,24 +22,31 @@ class mahasiswaController extends Controller
 
     //kendala disini
     public function getallmhs(){
-        // $data = array();
-        // foreach (mahasiswa::all() as $mahasiswa) {
-        //     // echo $mahasiswa->nim;
-        //     // echo " ";
-        //     $prodi = prodi::where('id',$mahasiswa->prodiId);
-        //     $data['nim'] = $mahasiswa->nim;
-        //     $data['nama'] = $mahasiswa->nama;
-        //     $data['password'] = $mahasiswa->password;
-        //     $data['angkatan'] = $mahasiswa->angkatan;
-        //     $data['prodiId'] = $mahasiswa->prodiId;
-        //     $data['prodi'] = $prodi;
-        // }
-        // $data = mahasiswa::all();
+        // $mahasiswa = mahasiswa::all();
+        $mahasiswa = mahasiswa::with('prodi')->get();
 
-        // $data = Auth::prodi()->with('mahasiswa')->get()->toArray;
-        // return response()->json([
-        //     $data
-        // ]);
+        return response()->json([
+            "success" => true,
+            "message" => "grabbed all mahasiswa",
+            'mahasiswa' => $mahasiswa
+            ],200);
+    }
+
+    public function getmhs(Request $request){
+        $nim = $request->nim;
+        $mahasiswa = mahasiswa::find($nim);
+
+        return response()->json([
+            'mahasiswa' => $mahasiswa,
+            'prodi' => $mahasiswa->prodi
+        ]);
+    }
+
+    public function getmhstoken(Request $request){
+
+        return response()->json([
+            'mahasiswa' => $request->mahasiswa
+        ]);
     }
     //
 }

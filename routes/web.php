@@ -26,6 +26,12 @@ $router->group(['prefix' => 'prodi'], function () use ($router) {
     $router->get('/', ['uses'=> 'prodiController@prodi']);
 });
 
+// router->group(['prefix' => 'matakuliah'], function () use ($router) {
+//     $router->get('/', ['uses'=> 'matakuliahController@getallmk']);
+// });
+
 $router->group(['prefix' => 'mahasiswa'], function () use ($router) {
     $router->get('/', ['uses'=> 'mahasiswaController@getallmhs']);
+    $router->get('/profile', ['middleware' => 'jwt.auth','uses'=> 'mahasiswaController@getmhstoken']);
+    $router->get('/{nim}', ['uses'=> 'mahasiswaController@getmhs']);
 });
