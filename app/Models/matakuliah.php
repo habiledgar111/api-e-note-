@@ -30,7 +30,7 @@ class matakuliah extends Model
     protected $hidden = [
     ];
 
-    public function mktomhs(){
+    public function mahasiswa(){
         return $this->belongsToMany(mahasiwa::class,'mahasiswa_matakuliah','mkId','mhsNim');
     }
 }

@@ -32,7 +32,7 @@ class mahasiswa extends Model implements AuthenticatableContract, AuthorizableCo
         'password',
     ];
 
-    public function mhstomk(){
+    public function matakuliah(){
         return $this->belongsToMany(matakuliah::class,'mahasiswa_matakuliah','mhsNim','mkId');
     }
 

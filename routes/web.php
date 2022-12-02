@@ -33,5 +33,7 @@ $router->group(['prefix' => 'matakuliah'], function () use ($router) {
 $router->group(['prefix' => 'mahasiswa'], function () use ($router) {
     $router->get('/', ['uses'=> 'mahasiswaController@getallmhs']);
     $router->get('/profile', ['middleware' => 'jwt.auth','uses'=> 'mahasiswaController@getmhstoken']);
-    $router->get('/{nim}', ['uses'=> 'mahasiswaController@getmhs']);
+    $router->post('/{nim}/matakuliah/{id}', ['uses'=> 'mahasiswaController@addmk']);
+    $router->put('/{nim}/matakuliah/{id}', ['uses'=> 'mahasiswaController@delete']);
+    $router->get('/{nim}', ['uses'=> 'mahasiswaController@getmhs']); 
 });

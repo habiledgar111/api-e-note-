@@ -23,7 +23,7 @@ class mahasiswaController extends Controller
     //kendala disini
     public function getallmhs(){
         // $mahasiswa = mahasiswa::all();
-        $mahasiswa = mahasiswa::with('prodi','mhstomk')->get();
+        $mahasiswa = mahasiswa::with('prodi','matakuliah')->get();
 
         return response()->json([
             "success" => true,
@@ -38,14 +38,37 @@ class mahasiswaController extends Controller
 
         return response()->json([
             'mahasiswa' => $mahasiswa,
-            'prodi' => $mahasiswa->prodi
+            'prodi' => $mahasiswa->prodi, 
+            'matakuliah' => $mahasiswa->matakuliah
+        ]);
+    }
+
+    public function addmk(Request $request){
+        $mahasiswa = mahasiswa::find($request->nim);
+        
+        $mahasiswa->matakuliah()->attach($request->id);
+
+        return response()->json([
+            "success" => true,
+            "message" => "Mata kuliah added to mahasiswa"
         ]);
     }
 
     public function getmhstoken(Request $request){
 
         return response()->json([
+            "success" => true,
+            "message" => "grabbed mahasiswa by token",
             'mahasiswa' => $request->mahasiswa
+        ]);
+    }
+
+    public function delete(Request $request){
+        $mahasiswa = mahasiswa::find($request->nim);
+        $mahasiswa ->matakuliah()->detach($request->id);
+        return response()->json([
+            "success" => true,
+            "message" => "Mata kuliah deleted from mahasiswa"
         ]);
     }
     //

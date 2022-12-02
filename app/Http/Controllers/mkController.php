@@ -25,6 +25,5 @@ class mkController extends Controller
             'matakuliah' => $mk
             ],200);
     }
-
     //
 }
