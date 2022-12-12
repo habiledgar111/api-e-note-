@@ -32,7 +32,7 @@ class note extends Model implements AuthenticatableContract, AuthorizableContrac
     protected $hidden = [
     ];
 
-    public function prodi(){
+    public function user(){
         return $this->belongsTo(user::class,'user_id');
     }
 }

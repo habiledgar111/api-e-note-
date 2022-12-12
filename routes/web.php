@@ -45,6 +45,8 @@ $router->group(['prefix' => 'user'], function() use ($router) {
 
 //note
 $router->group(['prefix' => 'note'], function() use ($router) {
+    //get all note
+    $router->get('/',['middleware' => 'jwt.auth','uses' => 'noteController@getAllNote']);
     //addnote
     $router->post('/add', ['middleware' => 'jwt.auth','uses' => 'noteController@addNote']);
 });
