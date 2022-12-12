@@ -49,4 +49,13 @@ class noteController extends Controller
             'user' => $userwithnote
             ],200);
     }
+
+    public function deleteNote(Request $request){
+        $user = $request->user;
+        $user->notes->detach($request->id);
+        return response()->json([
+            "success" => true,
+            "message" => "note deleted from user"
+        ]);
+    }
 }
