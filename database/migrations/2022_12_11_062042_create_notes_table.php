@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('judul');
             $table->longText('content');
-            $table->foreignId('user_id')->unsigned();
+            $table->string('user_id')->references('email')->on('users');
             $table->timestamps();
         });
     }

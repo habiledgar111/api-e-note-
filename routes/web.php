@@ -42,3 +42,19 @@ $router->group(['prefix' => 'auth'], function () use ($router) {
 $router->group(['prefix' => 'user'], function() use ($router) {
     $router->get('/', ['middleware' => 'jwt.auth','uses' => 'userController@getUserbyToken']);
 });
+
+//note
+$router->group(['prefix' => 'note'], function() use ($router) {
+    //addnote
+    $router->post('/add', ['middleware' => 'jwt.auth','uses' => 'noteController@addNote']);
+});
+
+//end point
+//post register
+//post login
+//post add note
+//get user from token
+//get all note
+//get note from id note
+//delete note
+//put update note

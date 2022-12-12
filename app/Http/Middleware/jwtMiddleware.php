@@ -40,17 +40,8 @@ class jwtMiddleware
 
         $user = user::find($credentials->sub);
         $request->user = $user;
-        // $request->email = $user->email;
-        // $request->nama = $user->nama;
 
+        return $next($request);
         // var_dump($user);
-        // return $next($request);
-        return response()->json([
-            "success" => true,
-            "message" => "grabbed user by token",
-            "user" => $user
-            // "user" => ["email" => $request->email,
-            //             "nama" => $request->nama]
-        ]);
     }
 }

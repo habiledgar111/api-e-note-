@@ -12,8 +12,8 @@ use Laravel\Lumen\Auth\Authorizable;
 class user extends Model implements AuthenticatableContract, AuthorizableContract
 {
     use Authenticatable, Authorizable, HasFactory;
-    // protected $primaryKey = 'email';
-    // protected $keyType = 'string';
+    protected $primaryKey = 'email';
+    protected $keyType = 'string';
     protected $table = 'users';
 
 
@@ -32,7 +32,7 @@ class user extends Model implements AuthenticatableContract, AuthorizableContrac
      * @var string[]
      */
     protected $hidden = [
-        'password'
+        'password','token'
     ];
 
     public function notes(){
