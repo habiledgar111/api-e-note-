@@ -9,13 +9,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Laravel\Lumen\Auth\Authorizable;
 
-class user extends Model implements AuthenticatableContract, AuthorizableContract
+class note extends Model implements AuthenticatableContract, AuthorizableContract
 {
     use Authenticatable, Authorizable, HasFactory;
-    // protected $primaryKey = 'email';
-    // protected $keyType = 'string';
-    protected $table = 'users';
 
+    protected $table = 'notes';
 
     /**
      * The attributes that are mass assignable.
@@ -23,7 +21,7 @@ class user extends Model implements AuthenticatableContract, AuthorizableContrac
      * @var string[]
      */
     protected $fillable = [
-        'email','nama','token','password'
+        'judul', 'content','user_id'
     ];
 
     /**
@@ -32,10 +30,9 @@ class user extends Model implements AuthenticatableContract, AuthorizableContrac
      * @var string[]
      */
     protected $hidden = [
-        'password'
     ];
 
-    public function notes(){
-        return $this->hasMany(note::class,'user_id');
+    public function prodi(){
+        return $this->belongsTo(user::class,'user_id');
     }
 }

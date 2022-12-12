@@ -1,10 +1,11 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\mahasiswa;
+use App\Models\user;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Firebase\JWT\JWT;
+
 
 class authController extends Controller
 {
@@ -19,17 +20,13 @@ class authController extends Controller
     }
 
     public function register(Request $request){
-        $nim = $request->nim;
+        $email = $request->email;
         $nama = $request->nama;
-        $angkatan = $request->angkatan;
-        $prodi = $request->prodiId;
-        $password = $request->password;
+        $password = Hash::make($request->password);
 
-        $mahasiswa = mahasiswa::create([
-            'nim' => $nim,
+        $user = user::create([
+            'email' => $email,
             'nama' => $nama,
-            'angkatan' => $angkatan,
-            'prodiId' => $prodi,
             'password' => $password
         ]);
 
@@ -39,10 +36,10 @@ class authController extends Controller
         ],200);
     }
 
-    protected function jwt(mahasiswa $mahasiswa){
+    protected function jwt(user $user){
         $payload = [
             'iss' => 'lumen-jwt',
-            'sub' => $mahasiswa->nim,
+            'sub' => $user->email,
             'iat' => time(),
             'exp' => time()+60*60
         ];
@@ -51,32 +48,32 @@ class authController extends Controller
     }
 
     public function login(Request $request){
-        $nim = $request->nim;
+        $email = $request->email;
         $password = $request->password;
 
-        $mahasiswa = mahasiswa::where('nim',$nim)->first();
+        $user = user::where('email',$email)->first();
 
-        if(!$mahasiswa){
+        if(!$user){
             return response()->json([
                 'status' => 'Error',
                 'message' => 'user not exist',
-                ], 404);
+            ],404);
         }
 
-        if($password != $mahasiswa->password){
+        if(!Hash::check($password,$user->password)){
             return response()->json([
                 'status' => 'Error',
                 'message' => 'wrong password',
                 ], 400);
         }
 
-        $mahasiswa->token = $this->jwt($mahasiswa);
-        $mahasiswa->save();
+        $user->token = $this->jwt($user);
+        $user->save();
 
         return response()->json([
             'success' => true,
             'message' => 'Successfully logged in',
-            'token' => $mahasiswa->token
+            'token' => $user->token
         ], 200);
     }
     //

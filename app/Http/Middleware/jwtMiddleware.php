@@ -3,7 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use App\Models\mahasiswa;
+use App\Models\user;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 use Firebase\JWT\ExpiredException;
@@ -20,7 +20,7 @@ class jwtMiddleware
     public function handle($request, Closure $next)
     {
         $token = $request->header('token') ?? $request->query('token');
-        
+
         if (!$token) {
         return response()->json([
         'error' => 'Token not provded.'
@@ -38,9 +38,19 @@ class jwtMiddleware
             ], 400);
         }
 
-        $mahasiswa = mahasiswa::find($credentials->sub);
-        $request->mahasiswa = $mahasiswa;
+        $user = user::find($credentials->sub);
+        $request->user = $user;
+        // $request->email = $user->email;
+        // $request->nama = $user->nama;
 
-        return $next($request);
+        // var_dump($user);
+        // return $next($request);
+        return response()->json([
+            "success" => true,
+            "message" => "grabbed user by token",
+            "user" => $user
+            // "user" => ["email" => $request->email,
+            //             "nama" => $request->nama]
+        ]);
     }
 }
