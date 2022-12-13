@@ -24,6 +24,27 @@ class authController extends Controller
         $nama = $request->nama;
         $password = Hash::make($request->password);
 
+        if(!$request->email){
+            return response()->json([
+                'success' => false,
+                'message' => 'email belum dimasukan'
+            ],400);
+        }
+
+        if(!$request->nama){
+            return response()->json([
+                'success' => false,
+                'message' => 'nama belum dimasukan'
+            ],400);
+        }
+
+        if(!$request->password){
+            return response()->json([
+                'success' => false,
+                'message' => 'password belum dimasukan'
+            ],400);
+        }
+        
         $user = user::create([
             'email' => $email,
             'nama' => $nama,
@@ -51,6 +72,20 @@ class authController extends Controller
         $email = $request->email;
         $password = $request->password;
 
+        if(!$request->email){
+            return response()->json([
+                'success' => false,
+                'message' => 'email belum dimasukan'
+            ],400);
+        }
+
+        if(!$request->password){
+            return response()->json([
+                'success' => false,
+                'message' => 'password belum dimasukan'
+            ],400);
+        }
+        
         $user = user::where('email',$email)->first();
 
         if(!$user){
