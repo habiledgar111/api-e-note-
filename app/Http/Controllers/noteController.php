@@ -26,7 +26,18 @@ class noteController extends Controller
         $judul = $request->judul;
         $content = $request->content;
         $user = $request->user;
+        
+        if(!$request->judul){
+            return response()->json([
+                'success' => false,
+                'message' => 'judul belum dimasukan'
+            ],400);
+        }
 
+        if(!$request->content){
+            $content = "";
+        }
+        
         $note = note::create([
             'judul' => $judul,
             'content' => $content,
@@ -50,12 +61,30 @@ class noteController extends Controller
             ],200);
     }
 
-    public function deleteNote(Request $request){
+   public function deleteNote(Request $request){
         $user = $request->user;
-        $user->notes->detach($request->id);
+        $note = DB::table('notes')->where([
+            ['id', '=', $request->id],
+            ['user_id', '=', $request->user->email]
+        ])->delete();
         return response()->json([
             "success" => true,
             "message" => "note deleted from user"
-        ]);
+        ],200);
+    }
+
+    public function updateNote(Request $request){
+        $user = $request->user;
+        $new_note = DB::table('notes')->where([
+            ['id', '=', $request->id],
+            ['user_id', '=', $request->user->email]
+        ])->update([
+            'judul' => $request->judul,
+            'content' =>$request->content
+            ]);
+        return response()->json([
+            "success" => true,
+            "message" => "note updated from user"
+        ],200);
     }
 }
