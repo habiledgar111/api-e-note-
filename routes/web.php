@@ -22,22 +22,6 @@ $router->group(['prefix' => 'auth'], function () use ($router) {
     $router->post('/login', ['uses'=> 'authController@login']);
 });
 
-// $router->group(['prefix' => 'prodi'], function () use ($router) {
-//     $router->get('/', ['uses'=> 'prodiController@prodi']);
-// });
-
-// $router->group(['prefix' => 'matakuliah'], function () use ($router) {
-//     $router->get('/', ['uses'=> 'mkController@getallmk']);
-// });
-
-// $router->group(['prefix' => 'mahasiswa'], function () use ($router) {
-//     $router->get('/', ['uses'=> 'mahasiswaController@getallmhs']);
-//     $router->get('/profile', ['middleware' => 'jwt.auth','uses'=> 'mahasiswaController@getmhstoken']);
-//     $router->post('/{nim}/matakuliah/{id}', ['uses'=> 'mahasiswaController@addmk']);
-//     $router->put('/{nim}/matakuliah/{id}', ['uses'=> 'mahasiswaController@delete']);
-//     $router->get('/{nim}', ['uses'=> 'mahasiswaController@getmhs']);
-// });
-
 //get user by token
 $router->group(['prefix' => 'user'], function() use ($router) {
     $router->get('/', ['middleware' => 'jwt.auth','uses' => 'userController@getUserbyToken']);
@@ -50,7 +34,9 @@ $router->group(['prefix' => 'note'], function() use ($router) {
     //addnote
     $router->post('/add', ['middleware' => 'jwt.auth','uses' => 'noteController@addNote']);
     //delete note
-    $router->delete('/{id}',['middleware' => 'jwt.auth','uses' => 'noteController@deleteNote']);
+    $router->delete('/delete/{id}',['middleware' => 'jwt.auth','uses' => 'noteController@deleteNote']);
+    //update note
+    $router->put('update/{id}',['middleware' => 'jwt.auth','uses' => 'noteController@updateNote']);
 });
 
 //end point
